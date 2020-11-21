@@ -8,7 +8,7 @@ r"""
 Gaussian Process Regression models based on GPyTorch models.
 """
 
-from __future__ import annotations
+# from __future__ import annotations
 
 from typing import Any, Dict, List, Optional, Union
 
@@ -92,9 +92,7 @@ class SingleTaskGP(BatchedMultiOutputGPyTorchModel, ExactGP):
         """
         if input_transform is not None:
             input_transform.to(train_X)
-        transformed_X = self.transform_inputs(
-            X=train_X, input_transform=input_transform
-        )
+        transformed_X = self.transform_inputs(X=train_X, input_transform=input_transform)
         if outcome_transform is not None:
             train_Y, _ = outcome_transform(train_Y)
         self._validate_tensor_args(X=transformed_X, Y=train_Y)
@@ -150,9 +148,7 @@ class SingleTaskGP(BatchedMultiOutputGPyTorchModel, ExactGP):
         return MultivariateNormal(mean_x, covar_x)
 
     @classmethod
-    def construct_inputs(
-        cls, training_data: TrainingData, **kwargs: Any
-    ) -> Dict[str, Any]:
+    def construct_inputs(cls, training_data: TrainingData, **kwargs: Any) -> Dict[str, Any]:
         r"""Construct kwargs for the `Model` from `TrainingData` and other options.
 
         Args:
@@ -206,15 +202,11 @@ class FixedNoiseGP(BatchedMultiOutputGPyTorchModel, ExactGP):
         """
         if input_transform is not None:
             input_transform.to(train_X)
-        transformed_X = self.transform_inputs(
-            X=train_X, input_transform=input_transform
-        )
+        transformed_X = self.transform_inputs(X=train_X, input_transform=input_transform)
         if outcome_transform is not None:
             train_Y, train_Yvar = outcome_transform(train_Y, train_Yvar)
         self._validate_tensor_args(X=transformed_X, Y=train_Y, Yvar=train_Yvar)
-        validate_input_scaling(
-            train_X=transformed_X, train_Y=train_Y, train_Yvar=train_Yvar
-        )
+        validate_input_scaling(train_X=transformed_X, train_Y=train_Y, train_Yvar=train_Yvar)
         self._set_dimensions(train_X=train_X, train_Y=train_Y)
         train_X, train_Y, train_Yvar = self._transform_tensor_args(
             X=train_X, Y=train_Y, Yvar=train_Yvar
@@ -222,9 +214,7 @@ class FixedNoiseGP(BatchedMultiOutputGPyTorchModel, ExactGP):
         likelihood = FixedNoiseGaussianLikelihood(
             noise=train_Yvar, batch_shape=self._aug_batch_shape
         )
-        ExactGP.__init__(
-            self, train_inputs=train_X, train_targets=train_Y, likelihood=likelihood
-        )
+        ExactGP.__init__(self, train_inputs=train_X, train_targets=train_Y, likelihood=likelihood)
         self.mean_module = ConstantMean(batch_shape=self._aug_batch_shape)
         if covar_module is None:
             self.covar_module = ScaleKernel(
@@ -258,7 +248,7 @@ class FixedNoiseGP(BatchedMultiOutputGPyTorchModel, ExactGP):
         sampler: MCSampler,
         observation_noise: Union[bool, Tensor] = True,
         **kwargs: Any,
-    ) -> FixedNoiseGP:
+    ):
         r"""Construct a fantasy model.
 
         Constructs a fantasy model in the following fashion:
@@ -317,9 +307,7 @@ class FixedNoiseGP(BatchedMultiOutputGPyTorchModel, ExactGP):
         return new_model
 
     @classmethod
-    def construct_inputs(
-        cls, training_data: TrainingData, **kwargs: Any
-    ) -> Dict[str, Any]:
+    def construct_inputs(cls, training_data: TrainingData, **kwargs: Any) -> Dict[str, Any]:
         r"""Construct kwargs for the `Model` from `TrainingData` and other options.
 
         Args:
@@ -402,17 +390,13 @@ class HeteroskedasticSingleTaskGP(SingleTaskGP):
             input_transform=input_transform,
         )
         self.register_added_loss_term("noise_added_loss")
-        self.update_added_loss_term(
-            "noise_added_loss", NoiseModelAddedLossTerm(noise_model)
-        )
+        self.update_added_loss_term("noise_added_loss", NoiseModelAddedLossTerm(noise_model))
         if outcome_transform is not None:
             self.outcome_transform = outcome_transform
         self.to(train_X)
 
-    def condition_on_observations(
-        self, X: Tensor, Y: Tensor, **kwargs: Any
-    ) -> HeteroskedasticSingleTaskGP:
+    def condition_on_observations(self, X: Tensor, Y: Tensor, **kwargs: Any):
         raise NotImplementedError
 
-    def subset_output(self, idcs: List[int]) -> HeteroskedasticSingleTaskGP:
+    def subset_output(self, idcs: List[int]):
         raise NotImplementedError

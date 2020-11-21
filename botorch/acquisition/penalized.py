@@ -8,7 +8,7 @@ r"""
 Modules to add regularization to acquisition functions.
 """
 
-from __future__ import annotations
+# from __future__ import annotations
 
 import math
 from typing import List, Optional

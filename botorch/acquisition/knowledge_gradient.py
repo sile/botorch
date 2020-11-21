@@ -24,7 +24,7 @@ and [Wu2016parallelkg]_.
     bayesian optimization. NIPS 2016.
 """
 
-from __future__ import annotations
+# from __future__ import annotations
 
 from copy import deepcopy
 from typing import Any, Callable, Optional, Tuple, Union

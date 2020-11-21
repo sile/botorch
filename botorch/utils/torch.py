@@ -6,7 +6,7 @@
 
 # NOTE: To be removed once (if) https://github.com/pytorch/pytorch/pull/37385 lands
 
-from __future__ import annotations
+# from __future__ import annotations
 
 from collections import OrderedDict
 

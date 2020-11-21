@@ -9,7 +9,7 @@ Deterministic (degenerate) posteriors. Used in conjunction with deterministic
 models.
 """
 
-from __future__ import annotations
+# from __future__ import annotations
 
 from typing import Optional
 

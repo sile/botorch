@@ -10,7 +10,7 @@ A converter that simplifies using numpy-based optimizers with generic torch
 for optimizing module parameters.
 """
 
-from __future__ import annotations
+# from __future__ import annotations
 
 from collections import OrderedDict
 from math import inf

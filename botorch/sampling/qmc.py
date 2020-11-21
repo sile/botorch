@@ -14,7 +14,7 @@ References:
     Finance. Universitext. Springer International Publishing, 2018.
 """
 
-from __future__ import annotations
+# from __future__ import annotations
 
 import math
 from typing import Optional

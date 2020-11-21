@@ -21,7 +21,7 @@ Active learning acquisition functions.
     ArXiv 2017.
 """
 
-from __future__ import annotations
+# from __future__ import annotations
 
 from typing import Optional
 

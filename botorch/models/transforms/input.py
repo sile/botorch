@@ -4,7 +4,7 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
-from __future__ import annotations
+# from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from collections import OrderedDict
@@ -71,7 +71,7 @@ class InputTransform(Module, ABC):
             f"{self.__class__.__name__} does not implement the `untransform` method"
         )
 
-    def equals(self, other: InputTransform) -> bool:
+    def equals(self, other) -> bool:
         r"""Check if another input transform is equivalent.
 
         Note: The reason that a custom equals method is definde rather than
@@ -91,8 +91,7 @@ class InputTransform(Module, ABC):
             and (self.transform_on_train == other.transform_on_train)
             and (self.transform_on_eval == other.transform_on_eval)
             and all(
-                torch.allclose(v, other_state_dict[k].to(v))
-                for k, v in self.state_dict().items()
+                torch.allclose(v, other_state_dict[k].to(v)) for k, v in self.state_dict().items()
             )
         )
 
@@ -304,9 +303,7 @@ class Normalize(ReversibleInputTransform):
         super().__init__()
         if bounds is not None:
             if bounds.size(-1) != d:
-                raise BotorchTensorDimensionError(
-                    "Incompatible dimensions of provided bounds"
-                )
+                raise BotorchTensorDimensionError("Incompatible dimensions of provided bounds")
             mins = bounds[..., 0:1, :]
             ranges = bounds[..., 1:2, :] - mins
             self.learn_bounds = False

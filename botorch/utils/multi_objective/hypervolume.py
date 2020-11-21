@@ -15,7 +15,7 @@ References
 
 """
 
-from __future__ import annotations
+# from __future__ import annotations
 
 from typing import List, Optional
 
@@ -139,9 +139,7 @@ class Hypervolume:
                     q.ignore = 0
                 q = q.prev[i]
             q = p.prev[i]
-            while n_pareto > 1 and (
-                q.data[i] > bounds[i] or q.prev[i].data[i] >= bounds[i]
-            ):
+            while n_pareto > 1 and (q.data[i] > bounds[i] or q.prev[i].data[i] >= bounds[i]):
                 p = q
                 self.list.remove(p, i, bounds)
                 q = p.prev[i]
@@ -197,7 +195,7 @@ class Hypervolume:
             self.list.extend(nodes, i)
 
 
-def sort_by_dimension(nodes: List[Node], i: int) -> None:
+def sort_by_dimension(nodes, i: int) -> None:
     r"""Sorts the list of nodes in-place by the specified objective.
 
     Args:

@@ -16,7 +16,7 @@ References
 
 """
 
-from __future__ import annotations
+# from __future__ import annotations
 
 from abc import abstractmethod
 from itertools import combinations

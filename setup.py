@@ -11,7 +11,7 @@ from setuptools import find_packages, setup
 
 
 REQUIRED_MAJOR = 3
-REQUIRED_MINOR = 7
+REQUIRED_MINOR = 6
 
 # Check for python version
 if sys.version_info < (REQUIRED_MAJOR, REQUIRED_MINOR):
@@ -61,7 +61,7 @@ setup(
     ],
     long_description=long_description,
     long_description_content_type="text/markdown",
-    python_requires=">=3.7",
+    python_requires=">=3.6",
     setup_requires=["setuptools_scm"],
     use_scm_version={
         "root": ".",

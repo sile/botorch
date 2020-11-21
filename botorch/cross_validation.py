@@ -8,7 +8,7 @@ r"""
 Cross-validation utilities using batch evaluation mode.
 """
 
-from __future__ import annotations
+# from __future__ import annotations
 
 from typing import Any, Dict, NamedTuple, Optional, Type
 

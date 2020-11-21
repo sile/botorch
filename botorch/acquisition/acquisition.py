@@ -8,7 +8,7 @@ r"""
 Abstract base module for all botorch acquisition functions.
 """
 
-from __future__ import annotations
+# from __future__ import annotations
 
 import warnings
 from abc import ABC, abstractmethod

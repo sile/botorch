@@ -12,7 +12,7 @@ Gaussian Process Regression models based on GPyTorch models.
     multi-fidelity bayesian optimization for hyperparameter tuning. ArXiv 2019.
 """
 
-from __future__ import annotations
+# from __future__ import annotations
 
 from typing import Any, Dict, Optional, Tuple
 

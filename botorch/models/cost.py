@@ -8,7 +8,7 @@ r"""
 Cost models to be used with multi-fidelity optimization.
 """
 
-from __future__ import annotations
+# from __future__ import annotations
 
 from typing import Dict, Optional
 

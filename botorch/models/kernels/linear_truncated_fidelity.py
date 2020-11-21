@@ -4,7 +4,7 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
-from __future__ import annotations
+# from __future__ import annotations
 
 from copy import deepcopy
 from typing import Any, List, Optional
@@ -98,16 +98,13 @@ class LinearTruncatedFidelityKernel(Kernel):
         **kwargs: Any,
     ) -> None:
         if dimension is None and kwargs.get("active_dims") is None:
-            raise UnsupportedError(
-                "Must specify dimension when not specifying active_dims."
-            )
+            raise UnsupportedError("Must specify dimension when not specifying active_dims.")
         n_fidelity = len(fidelity_dims)
         if len(set(fidelity_dims)) != n_fidelity:
             raise ValueError("fidelity_dims must not have repeated elements")
         if n_fidelity not in {1, 2}:
             raise UnsupportedError(
-                "LinearTruncatedFidelityKernel accepts either one or two"
-                "fidelity parameters."
+                "LinearTruncatedFidelityKernel accepts either one or two" "fidelity parameters."
             )
         if nu not in {0.5, 1.5, 2.5}:
             raise ValueError("nu must be one of 0.5, 1.5, or 2.5")
@@ -203,9 +200,7 @@ class LinearTruncatedFidelityKernel(Kernel):
         covar_biased = self.covar_module_biased(x1_, x2_, diag=diag)
 
         # clamp to avoid numerical issues
-        fd_idxr0 = torch.full(
-            (1,), self.fidelity_dims[0], dtype=torch.long, device=x1.device
-        )
+        fd_idxr0 = torch.full((1,), self.fidelity_dims[0], dtype=torch.long, device=x1.device)
         x11_ = x1.index_select(dim=-1, index=fd_idxr0).clamp(0, 1)
         x21t_ = x2.index_select(dim=-1, index=fd_idxr0).clamp(0, 1)
         if not diag:
@@ -215,9 +210,7 @@ class LinearTruncatedFidelityKernel(Kernel):
 
         if len(self.fidelity_dims) > 1:
             # clamp to avoid numerical issues
-            fd_idxr1 = torch.full(
-                (1,), self.fidelity_dims[1], dtype=torch.long, device=x1.device
-            )
+            fd_idxr1 = torch.full((1,), self.fidelity_dims[1], dtype=torch.long, device=x1.device)
             x12_ = x1.index_select(dim=-1, index=fd_idxr1).clamp(0, 1)
             x22t_ = x2.index_select(dim=-1, index=fd_idxr1).clamp(0, 1)
             x1b_ = torch.cat([x11_, x12_], dim=-1)
@@ -238,7 +231,7 @@ class LinearTruncatedFidelityKernel(Kernel):
 
         return covar_unbiased + bias_factor * covar_biased
 
-    def __getitem__(self, index) -> LinearTruncatedFidelityKernel:
+    def __getitem__(self, index):
         new_kernel = deepcopy(self)
         new_kernel.covar_module_unbiased = self.covar_module_unbiased[index]
         new_kernel.covar_module_biased = self.covar_module_biased[index]

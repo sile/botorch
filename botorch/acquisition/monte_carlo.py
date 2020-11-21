@@ -18,7 +18,7 @@ with (quasi) Monte-Carlo sampling. See [Rezende2014reparam]_, [Wilson2017reparam
     The reparameterization trick for acquisition functions. ArXiv 2017.
 """
 
-from __future__ import annotations
+# from __future__ import annotations
 
 import math
 from abc import ABC, abstractmethod

@@ -8,7 +8,7 @@ r"""
 Helpers for handling objectives.
 """
 
-from __future__ import annotations
+# from __future__ import annotations
 
 from typing import Callable, List, Optional
 

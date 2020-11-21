@@ -8,7 +8,7 @@ r"""
 Utilities for acquisition functions.
 """
 
-from __future__ import annotations
+# from __future__ import annotations
 
 import math
 import warnings
@@ -34,7 +34,7 @@ from torch.quasirandom import SobolEngine
 def get_acquisition_function(
     acquisition_function_name: str,
     model: Model,
-    objective: MCAcquisitionObjective,
+    objective,
     X_observed: Tensor,
     X_pending: Optional[Tensor] = None,
     constraints: Optional[List[Callable[[Tensor], Tensor]]] = None,
@@ -42,7 +42,7 @@ def get_acquisition_function(
     qmc: bool = True,
     seed: Optional[int] = None,
     **kwargs,
-) -> monte_carlo.MCAcquisitionFunction:
+):
     r"""Convenience function for initializing botorch acquisition functions.
 
     Args:
@@ -142,9 +142,7 @@ def get_acquisition_function(
             objective=objective,
             constraints=constraints,
         )
-    raise NotImplementedError(
-        f"Unknown acquisition function {acquisition_function_name}"
-    )
+    raise NotImplementedError(f"Unknown acquisition function {acquisition_function_name}")
 
 
 def get_infeasible_cost(
@@ -271,9 +269,7 @@ def prune_inferior_points(
     obj_vals = objective(samples)
     if obj_vals.ndim > 2:
         # TODO: support batched inputs (req. dealing with ragged tensors)
-        raise UnsupportedError(
-            "Batched models are currently unsupported by prune_inferior_points"
-        )
+        raise UnsupportedError("Batched models are currently unsupported by prune_inferior_points")
     is_best = torch.argmax(obj_vals, dim=-1)
     idcs, counts = torch.unique(is_best, return_counts=True)
 
@@ -313,9 +309,7 @@ def project_to_target_fidelity(
     ones = torch.ones(*X.shape[:-1], device=X.device, dtype=X.dtype)
     # here we're looping through the feature dimension of X - this could be
     # slow for large `d`, we should optimize this for that case
-    X_proj = torch.stack(
-        [X[..., i] if i not in tfs else tfs[i] * ones for i in range(d)], dim=-1
-    )
+    X_proj = torch.stack([X[..., i] if i not in tfs else tfs[i] * ones for i in range(d)], dim=-1)
     return X_proj
 
 

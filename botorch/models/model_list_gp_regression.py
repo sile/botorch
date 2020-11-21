@@ -8,7 +8,7 @@ r"""
 Model List GP Regression models.
 """
 
-from __future__ import annotations
+# from __future__ import annotations
 
 from copy import deepcopy
 from typing import Any, List
@@ -48,9 +48,7 @@ class ModelListGP(IndependentModelList, ModelListGPyTorchModel):
         """
         super().__init__(*gp_models)
 
-    def condition_on_observations(
-        self, X: Tensor, Y: Tensor, **kwargs: Any
-    ) -> ModelListGP:
+    def condition_on_observations(self, X: Tensor, Y: Tensor, **kwargs: Any):
         r"""Condition the model on new observations.
 
         Args:
@@ -73,9 +71,7 @@ class ModelListGP(IndependentModelList, ModelListGPyTorchModel):
             `n_i + n'` training examples, where the `n'` training examples have
             been added and all test-time caches have been updated.
         """
-        self._validate_tensor_args(
-            X=X, Y=Y, Yvar=kwargs.get("noise", None), strict=False
-        )
+        self._validate_tensor_args(X=X, Y=Y, Yvar=kwargs.get("noise", None), strict=False)
         inputs = [X] * self.num_outputs
         if Y.shape[-1] != self.num_outputs:
             raise BotorchTensorDimensionError(
@@ -92,7 +88,7 @@ class ModelListGP(IndependentModelList, ModelListGPyTorchModel):
             kwargs_ = kwargs
         return super().get_fantasy_model(inputs, targets, **kwargs_)
 
-    def subset_output(self, idcs: List[int]) -> ModelListGP:
+    def subset_output(self, idcs: List[int]):
         r"""Subset the model along the output dimension.
 
         Args:

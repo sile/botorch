@@ -11,7 +11,7 @@ To implement your own, simply inherit from both the provided classes and a
 GPyTorch Model class such as an ExactGP.
 """
 
-from __future__ import annotations
+# from __future__ import annotations
 
 import itertools
 import warnings
@@ -196,9 +196,7 @@ class BatchedMultiOutputGPyTorchModel(GPyTorchModel):
     _aug_batch_shape: torch.Size
 
     @staticmethod
-    def get_batch_dimensions(
-        train_X: Tensor, train_Y: Tensor
-    ) -> Tuple[torch.Size, torch.Size]:
+    def get_batch_dimensions(train_X: Tensor, train_Y: Tensor) -> Tuple[torch.Size, torch.Size]:
         r"""Get the raw batch shape and output-augmented batch shape of the inputs.
 
         Args:
@@ -329,9 +327,7 @@ class BatchedMultiOutputGPyTorchModel(GPyTorchModel):
             posterior = self.outcome_transform.untransform_posterior(posterior)
         return posterior
 
-    def condition_on_observations(
-        self, X: Tensor, Y: Tensor, **kwargs: Any
-    ) -> BatchedMultiOutputGPyTorchModel:
+    def condition_on_observations(self, X: Tensor, Y: Tensor, **kwargs: Any):
         r"""Condition the model on new observations.
 
         Args:
@@ -390,7 +386,7 @@ class BatchedMultiOutputGPyTorchModel(GPyTorchModel):
         fantasy_model._aug_batch_shape = fantasy_model.train_targets.shape[:-1]
         return fantasy_model
 
-    def subset_output(self, idcs: List[int]) -> BatchedMultiOutputGPyTorchModel:
+    def subset_output(self, idcs: List[int]):
         r"""Subset the model along the output dimension.
 
         Args:
@@ -414,9 +410,7 @@ class BatchedMultiOutputGPyTorchModel(GPyTorchModel):
 
         new_model._num_outputs = m
         new_model._aug_batch_shape = new_model._aug_batch_shape[:-1] + new_tail_bs
-        new_model.train_inputs = tuple(
-            ti[..., idxr, :, :] for ti in new_model.train_inputs
-        )
+        new_model.train_inputs = tuple(ti[..., idxr, :, :] for ti in new_model.train_inputs)
         new_model.train_targets = new_model.train_targets[..., idxr, :]
 
         # adjust batch shapes of parameters/buffers if necessary
@@ -523,13 +517,9 @@ class ModelListGPyTorchModel(GPyTorchModel, ABC):
                 mvn=MultitaskMultivariateNormal.from_independent_mvns(mvns=mvns)
             )
 
-    def condition_on_observations(
-        self, X: Tensor, Y: Tensor, **kwargs: Any
-    ) -> ModelListGPyTorchModel:
+    def condition_on_observations(self, X: Tensor, Y: Tensor, **kwargs: Any):
         class_name = self.__class__.__name__
-        raise NotImplementedError(
-            f"`condition_on_observations` not implemented in {class_name}"
-        )
+        raise NotImplementedError(f"`condition_on_observations` not implemented in {class_name}")
 
 
 class MultiTaskGPyTorchModel(GPyTorchModel, ABC):
@@ -574,9 +564,7 @@ class MultiTaskGPyTorchModel(GPyTorchModel, ABC):
             raise ValueError("Too many output indices")
         cls_name = self.__class__.__name__
         if hasattr(self, "outcome_transform"):
-            raise NotImplementedError(
-                f"Outcome transforms currently not supported by {cls_name}"
-            )
+            raise NotImplementedError(f"Outcome transforms currently not supported by {cls_name}")
 
         # construct evaluation X
         X_full = _make_X_full(X=X, output_indices=output_indices, tf=self._task_feature)

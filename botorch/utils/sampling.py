@@ -8,7 +8,7 @@ r"""
 Utilities for MC and qMC sampling.
 """
 
-from __future__ import annotations
+# from __future__ import annotations
 
 import warnings
 from contextlib import contextmanager
@@ -147,7 +147,7 @@ def draw_sobol_samples(
     bounds: Tensor,
     n: int,
     q: int,
-    batch_shape: Optional[Iterable[int], torch.Size] = None,
+    batch_shape=None,
     seed: Optional[int] = None,
 ) -> Tensor:
     r"""Draw qMC samples from the box defined by bounds.

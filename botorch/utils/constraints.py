@@ -8,7 +8,7 @@ r"""
 Helpers for handling outcome constraints.
 """
 
-from __future__ import annotations
+# from __future__ import annotations
 
 from functools import partial
 from typing import Callable, List, Optional, Tuple

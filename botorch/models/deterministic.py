@@ -10,7 +10,7 @@ mappings via the BoTorch Model and Posterior APIs. Useful e.g. for defining
 known cost functions for cost-aware acquisition utilities.
 """
 
-from __future__ import annotations
+# from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from typing import Any, Callable, List, Optional, Union
@@ -49,9 +49,7 @@ class DeterministicModel(Model, ABC):
         r"""Compute the (deterministic) posterior at X."""
         if kwargs.get("observation_noise") is not None:
             # TODO: Consider returning an MVN here instead
-            raise UnsupportedError(
-                "Deterministic models do not support observation noise."
-            )
+            raise UnsupportedError("Deterministic models do not support observation noise.")
         values = self.forward(X)
         if output_indices is not None:
             values = values[..., output_indices]
@@ -74,7 +72,7 @@ class GenericDeterministicModel(DeterministicModel):
         self._f = f
         self._num_outputs = num_outputs
 
-    def subset_output(self, idcs: List[int]) -> GenericDeterministicModel:
+    def subset_output(self, idcs: List[int]):
         r"""Subset the model along the output dimension.
 
         Args:
@@ -129,7 +127,7 @@ class AffineDeterministicModel(DeterministicModel):
         self.register_buffer("b", b.expand(a.size(-1)))
         self._num_outputs = a.size(-1)
 
-    def subset_output(self, idcs: List[int]) -> AffineDeterministicModel:
+    def subset_output(self, idcs: List[int]):
         r"""Subset the model along the output dimension.
 
         Args:

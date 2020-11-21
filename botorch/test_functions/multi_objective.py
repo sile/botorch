@@ -42,7 +42,7 @@ References
     pp. 173–195, 2000.
 """
 
-from __future__ import annotations
+# from __future__ import annotations
 
 import math
 from typing import Optional

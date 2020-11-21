@@ -8,7 +8,7 @@ r"""
 Posterior Module to be used with GPyTorch models.
 """
 
-from __future__ import annotations
+# from __future__ import annotations
 
 from typing import Optional
 

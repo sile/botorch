@@ -8,7 +8,7 @@ r"""
 Abstract base module for all botorch posteriors.
 """
 
-from __future__ import annotations
+# from __future__ import annotations
 
 from abc import ABC, abstractmethod, abstractproperty
 from typing import Optional

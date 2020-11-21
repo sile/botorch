@@ -8,7 +8,7 @@ r"""
 Utiltiy functions for models.
 """
 
-from __future__ import annotations
+# from __future__ import annotations
 
 import warnings
 from contextlib import ExitStack, contextmanager

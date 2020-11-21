@@ -21,7 +21,7 @@ References
     arXiv:1901.08275v1, 2019
 """
 
-from __future__ import annotations
+# from __future__ import annotations
 
 from copy import deepcopy
 from math import log

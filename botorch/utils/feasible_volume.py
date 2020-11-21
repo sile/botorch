@@ -4,11 +4,10 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
-from __future__ import annotations
+# from __future__ import annotations
 
 from typing import Callable, List, Optional, Tuple
 
-import botorch.models.model as model
 import torch
 from botorch.logging import _get_logger
 from botorch.utils.sampling import manual_seed
@@ -57,7 +56,7 @@ def get_feasible_samples(
 
 
 def get_outcome_feasibility_probability(
-    model: model.Model,
+    model,
     X: Tensor,
     outcome_constraints: List[Callable[[Tensor], Tensor]],
     threshold: float = 0.1,
@@ -116,7 +115,7 @@ def get_outcome_feasibility_probability(
 
 def estimate_feasible_volume(
     bounds: Tensor,
-    model: model.Model,
+    model,
     outcome_constraints: List[Callable[[Tensor], Tensor]],
     inequality_constraints: Optional[List[Tuple[Tensor, Tensor, float]]] = None,
     nsample_feature: int = 1000,
@@ -181,8 +180,7 @@ def estimate_feasible_volume(
 
     if verbose:  # pragma: no cover
         logger.info(
-            "Proportion of volume that satisfies linear constraints: "
-            + f"{p_feature:.4e}"
+            "Proportion of volume that satisfies linear constraints: " + f"{p_feature:.4e}"
         )
         if p_feature <= 0.01:
             logger.warning(

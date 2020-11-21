@@ -18,7 +18,7 @@ Preference Learning with Gaussian Process
     arXiv preprint arXiv:1012.2599 (2010).
 """
 
-from __future__ import annotations
+# from __future__ import annotations
 
 import math
 import warnings
@@ -144,9 +144,7 @@ class PairwiseGP(Model, GP):
                     batch_shape=self._input_batch_shape,
                     ard_num_dims=self.dim,
                     lengthscale_prior=ls_prior,
-                    lengthscale_constraint=Positive(
-                        transform=None, initial_value=ls_prior_mode
-                    ),
+                    lengthscale_constraint=Positive(transform=None, initial_value=ls_prior_mode),
                 ),
                 outputscale_prior=SmoothedBoxPrior(a=1, b=4),
             )
@@ -160,7 +158,7 @@ class PairwiseGP(Model, GP):
 
         self.to(self.datapoints)
 
-    def __deepcopy__(self, memo) -> PairwiseGP:
+    def __deepcopy__(self, memo):
         attrs = (
             "datapoints",
             "comparisons",
@@ -198,9 +196,7 @@ class PairwiseGP(Model, GP):
     def _has_no_data(self):
         r"""Return true if the model does not have both datapoints and comparisons"""
         return (
-            self.datapoints is None
-            or len(self.datapoints.size()) == 0
-            or self.comparisons is None
+            self.datapoints is None or len(self.datapoints.size()) == 0 or self.comparisons is None
         )
 
     def _calc_covar(self, X1: Tensor, X2: Tensor) -> Union[Tensor, LazyTensor]:
@@ -272,8 +268,7 @@ class PairwiseGP(Model, GP):
             try:
                 _ = torch.cholesky(X)
                 warnings.warn(
-                    "X is not a p.d. matrix; "
-                    f"Added jitter of {jitter_new:.2e} to the diagonal",
+                    "X is not a p.d. matrix; " f"Added jitter of {jitter_new:.2e} to the diagonal",
                     RuntimeWarning,
                 )
                 return X
@@ -285,9 +280,7 @@ class PairwiseGP(Model, GP):
         )
         return X
 
-    def _calc_z(
-        self, utility: Tensor, D: Tensor
-    ) -> Tuple[Tensor, Tensor, Tensor, Tensor]:
+    def _calc_z(self, utility: Tensor, D: Tensor) -> Tuple[Tensor, Tensor, Tensor, Tensor]:
         r"""Calculate z score.
 
         Calculate z score as in [Chu2005preference]_: the standarized difference
@@ -549,9 +542,7 @@ class PairwiseGP(Model, GP):
                     )
 
             self._x0 = x.copy()  # save for warm-starting
-            f = torch.tensor(
-                x, dtype=self.datapoints.dtype, device=self.datapoints.device
-            )
+            f = torch.tensor(x, dtype=self.datapoints.dtype, device=self.datapoints.device)
 
         # To perform hyperparameter optimization, this need to be recalculated
         # when calling forward() in order to obtain correct gradients
@@ -693,9 +684,7 @@ class PairwiseGP(Model, GP):
         # TODO: make D a sparse matrix once pytorch has better support for
         #       sparse tensors
         D_size = torch.Size((*(self._input_batch_shape), self.m, self.n))
-        self.D = torch.zeros(
-            D_size, dtype=self.datapoints.dtype, device=self.datapoints.device
-        )
+        self.D = torch.zeros(D_size, dtype=self.datapoints.dtype, device=self.datapoints.device)
         comp_view = self.comparisons.view(-1, self.m, 2).long()
         for i, sub_D in enumerate(self.D.view(-1, self.m, self.n)):
             sub_D.scatter_(1, comp_view[i, :, [0]], 1)
@@ -745,9 +734,7 @@ class PairwiseGP(Model, GP):
             # in gradients for pytorch
             self.utility = self._util_newton_updates(self.utility, max_iter=1)
 
-            hl = self.likelihood_hess = self._hess_likelihood_f_sum(
-                self.utility, self.D, self.DT
-            )
+            hl = self.likelihood_hess = self._hess_likelihood_f_sum(self.utility, self.D, self.DT)
             covar = self.covar
             # Apply matrix inversion lemma on eq. in page 27 of [Brochu2010tutorial]_
             # (A + B)^-1 = A^-1 - A^-1 @ (I + BA^-1)^-1 @ BA^-1
@@ -851,8 +838,7 @@ class PairwiseGP(Model, GP):
 
         if output_indices is not None:
             raise RuntimeError(
-                "output_indices is not None. PairwiseGP should not be a"
-                "multi-output model."
+                "output_indices is not None. PairwiseGP should not be a" "multi-output model."
             )
 
         post = self(X)
@@ -883,15 +869,11 @@ class PairwiseGP(Model, GP):
             # observed values. Raise a RuntimeError if Y is not a tensor presenting
             # pairwise comparisons
             if Y.dtype in (float32, float64) or Y.shape[-1] != 2:
-                raise RuntimeError(
-                    "Conditioning on non-pairwise comparison observations."
-                )
+                raise RuntimeError("Conditioning on non-pairwise comparison observations.")
 
             # Reshaping datapoints and comparisons by batches
             Y_new_batch_shape = Y.shape[:-2]
-            new_datapoints = self.datapoints.expand(
-                Y_new_batch_shape + self.datapoints.shape[-2:]
-            )
+            new_datapoints = self.datapoints.expand(Y_new_batch_shape + self.datapoints.shape[-2:])
             new_comparisons = self.comparisons.expand(
                 Y_new_batch_shape + self.comparisons.shape[-2:]
             )

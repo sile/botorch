@@ -9,7 +9,7 @@ A wrapper around AquisitionFunctions to fix certain features for optimization.
 This is useful e.g. for performing contextual optimization.
 """
 
-from __future__ import annotations
+# from __future__ import annotations
 
 from typing import List, Union
 

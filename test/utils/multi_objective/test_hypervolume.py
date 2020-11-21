@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 
 # Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved
-from __future__ import annotations
+# from __future__ import annotations
 
 import torch
 from botorch.exceptions.errors import BotorchTensorDimensionError

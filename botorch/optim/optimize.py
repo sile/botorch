@@ -8,7 +8,7 @@ r"""
 Methods for optimizing acquisition functions.
 """
 
-from __future__ import annotations
+# from __future__ import annotations
 
 from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 

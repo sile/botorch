@@ -8,7 +8,7 @@ r"""
 Utility functions for constrained optimization.
 """
 
-from __future__ import annotations
+# from __future__ import annotations
 
 from functools import partial
 from typing import Callable, Dict, List, Optional, Tuple, Union
